@@ -1,0 +1,21 @@
+.Footer {
+    padding: 5px 10px;
+    background-color: #004f53;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.Footer p {
+    margin: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #eee;
+    font-size: .7em;
+    text-align: center;
+}
+
+.Footer a {
+    color: #eee;
+}

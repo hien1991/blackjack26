@@ -1,0 +1,38 @@
+.Form {
+    margin: 0;
+    padding-top: 15px;
+    display: flex;
+
+}
+
+.Input {
+    border: none;
+    border-radius: 10px;
+    padding: 0 15px;
+    margin: 0 15px 0 0;
+    width: 80%;
+    font-size: 1.2em;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+}
+
+.SendButton {
+    color: #fff !important;
+    background: #018b1f;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 0;
+    display: inline-block;
+    border: none;
+    border-radius: 10px;
+    width: 20%;
+    cursor: pointer;
+}
+
+.SendButton:hover {
+    background: #01a024;
+}
