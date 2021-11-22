@@ -1,7 +1,62 @@
 
 
+
+  .player{
+    display: inline;
+    max-width: 7%;
+    position: relative;
+    right: 8vw;
+    top: 5vh;
+  }
+
+  .leftPlayer{
+
+  }
+
   .playingCard {
     max-width: 14%;
+  }
+
+  .playerHand{
+    display: inline;
+    position: relative;
+    top: 55vh;
+    left: 12vw;
+  }
+
+  .connectionCount{
+    position: relative;
+    left: 1%;
+    top: 1vh;
+  }
+
+  .overlappingCard{
+    position: relative;
+    right: 8%;
+  }
+
+  .dealer{
+    position: relative;
+    top: 5vh;
+    left: 24vw;
+    max-width: 40%;
+  }
+  /* Not sure why, but taking this out will change the size, but changing only this won't work. */
+  .dealerImg{
+    max-width: 100%
+  }
+
+  .dealerCard{
+    max-width: 20%;
+    display: inline;
+    position: relative;
+    left: 1vw
+  }
+  .dealerOverlapCard{
+    max-width: 20%;
+    display: inline;
+    position: relative;
+    right: 5vw;
   }
 
   /* Large screens like sideway phone tilt, tablets, etc. */
@@ -11,31 +66,51 @@
     }
   }
 
-  .overlappingCard{
-    position: relative;
-    right: 8%;
-  }
-
   /* Average phone width */
   @media (min-width: 320px) and (max-width: 480px) {
     .overlappingCard{
       position: relative;
       right: 11%;
     }
+    .player{
+      display: inline;
+      max-width: 8%;
+      position: relative;
+      right: 12vw;
+      top: 2.25vh;
+    }
+    .leftPlayer{
+      left: 88%;
+      top: -2vh;
+    }
+    .playerHand{
+      display: inline;
+      position: relative;
+      top: 55vh;
+      left: 5vw;
+    }
+    .dealer{
+      position: relative;
+      top: 5vh;
+      left: 24vw;
+      max-width: 20%;
+    }
+    .dealerCard{
+      max-width: 50%;
+      display: inline;
+      position: relative;
+      left: 22vw;
+      bottom: 6.85vh;
+    }
+    .dealerOverlapCard{
+      max-width: 50%;
+      display: inline;
+      position: relative;
+      left: 15vw;
+      bottom: 6.85vh;
+    }
+    
   } 
-
-  .playerHand{
-    display: inline;
-    position: relative;
-    top: 65vh;
-    left: 12vw;
-  }
-
-  .connectionCount{
-    position: relative;
-    left: 1%;
-    top: 1vh;
-  }
 
 
 

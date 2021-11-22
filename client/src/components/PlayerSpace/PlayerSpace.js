@@ -50,7 +50,7 @@ const PlayerSpace = () => {
        in the game, and then shuffle & pop the deck and deal them as assigned variables that won't change until a specific
        game action is taken.  */
     const dealCards = () => {
-        let cardsInPlay = 6; //un-hardcode this
+        let cardsInPlay = 8; //un-hardcode this
         let newCardSlots = ['', '', '', '', '', '', '', ''];
 
         shuffleDeck();
@@ -66,22 +66,26 @@ const PlayerSpace = () => {
     return (
         <div>
             <div className={classes.connectionCount}>Online: {connectionsCount}</div>
+            <div className={classes.dealer}>
+                <img className={classes.dealerImg} src='images/drakeYes.png' alt="dealer" />
+                <img className={classes.dealerCard} src={getCardDealt(6)} alt="card" />
+                <img className={`${classes.dealerOverlapCard}`} src={getCardDealt(7)} alt="card" />
+            </div>
             <div className={classes.playerHand}>
                 <img className={classes.playingCard} src={getCardDealt(0)} alt="card" />
                 <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(1)} alt="card" />
+                <div className={classes.player}><img className={classes.player} src='images/wheelchair.jpeg' alt="player" /></div>
             </div>
             <div className={classes.playerHand}>
                 <img className={classes.playingCard} src={getCardDealt(2)} alt="card" />
                 <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(3)} alt="card" />
+                <div className={classes.player}><img className={classes.player} src='images/caveman.png' alt="player" /></div>
             </div>
             <div className={classes.playerHand}>
                 <img className={classes.playingCard} src={getCardDealt(4)} alt="card" />
                 <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(5)} alt="card" />
+                <div className={`${classes.player} ${classes.leftPlayer}`}><img className={classes.player} src='images/joe.png' alt="player" /></div>
             </div>
-
-            {/* <div className={classes.player}>P1</div>
-            <div className={classes.player}>P2</div>
-            <div className={classes.player}>P3</div> */}
             <button onClick={() => dealCards()}>Deal</button>
         </div>
     );

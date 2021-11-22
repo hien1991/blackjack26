@@ -22,9 +22,9 @@ let curentCardSlots = [];
           so I don't have to make 4 copy/paste
         - Re-align the player cards/bets/names. I guess make 4 separate classes/IDs and position them accordingly.
         - Make function that assigns player1/2/3/spectate to socketConnection map based on current size
-        - Make the dealt cards sync across all players
 
 
+        - Change the chat logo & the SayOk thing to my own custom thing.
         - Can comment out the join component stuff with all the user/room emits
         - I think it disconnects you if you push browser aside on web or multitask on mobile. May need to find a way
           to reconnect... but then again I feel like most web games have this issue so maybe it's fine.
