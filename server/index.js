@@ -22,6 +22,16 @@ let curentCardSlots = [];
           so I don't have to make 4 copy/paste
         - Re-align the player cards/bets/names. I guess make 4 separate classes/IDs and position them accordingly.
         - Make function that assigns player1/2/3/spectate to socketConnection map based on current size
+        - Make select character screen: it says "select your character" as a top header, and then has a list of
+          "available" and "taken". Then add an extra "spectate" button that will make user go into game without being
+          any character in case all players are taken.
+
+        - Bookmark: make the hit/stand show up after dealing and hide deal button, have the game go through each turn with 
+          displayed text stating which player to go. For now just make hit/stand available to everyone as there's no assigned 
+          players. For now, make both hit/stand just proceed to next player's turn. For now just treat dealer like another 
+          player. After a complete round of hit/stand, update text to say "??? won! Waiting on players..." and make deal button 
+          available again.
+            - After, make it so that when it sees 0 players online, it goes back to back-card state with deal button available.
 
 
         - Change the chat logo & the SayOk thing to my own custom thing.

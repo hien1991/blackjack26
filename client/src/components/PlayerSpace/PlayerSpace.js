@@ -10,6 +10,7 @@ let gameDeck = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's1
 'h4', 'h5', 'h6', 'h7', 'h8', 'h9', 'h10', 'h11', 'h12', 'h13', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6',
 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13'];
 let initialShuffle = false;
+let showHitStandButtons = false;
 const deckMax = 52;
 
 const PlayerSpace = () => {
@@ -68,13 +69,14 @@ const PlayerSpace = () => {
             <div className={classes.connectionCount}>Online: {connectionsCount}</div>
             <div className={classes.dealer}>
                 <img className={classes.dealerImg} src='images/drakeYes.png' alt="dealer" />
-                <img className={classes.dealerCard} src={getCardDealt(6)} alt="card" />
+                <img className={classes.dealerCard} src='images/classic-cards/back.png' alt="card" />
                 <img className={`${classes.dealerOverlapCard}`} src={getCardDealt(7)} alt="card" />
             </div>
             <div className={classes.playerHand}>
                 <img className={classes.playingCard} src={getCardDealt(0)} alt="card" />
                 <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(1)} alt="card" />
-                <div className={classes.player}><img className={classes.player} src='images/wheelchair.jpeg' alt="player" /></div>
+                <div className={classes.player}><img className={classes.player} src='images/wheelchair.jpeg' alt="player" /> 
+            </div>
             </div>
             <div className={classes.playerHand}>
                 <img className={classes.playingCard} src={getCardDealt(2)} alt="card" />
@@ -86,7 +88,22 @@ const PlayerSpace = () => {
                 <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(5)} alt="card" />
                 <div className={`${classes.player} ${classes.leftPlayer}`}><img className={classes.player} src='images/joe.png' alt="player" /></div>
             </div>
-            <button onClick={() => dealCards()}>Deal</button>
+            <div className={classes.gameText}>
+                <h2>Waiting on players...</h2>
+            </div>
+            <div>
+                {showHitStandButtons? 
+                <div className={classes.gameButtons}>
+                    <button>Hit</button>
+                    <button>Stand</button>
+                </div> 
+                : ''}
+            </div>
+            <div className={classes.gameButtons}>
+                <button onClick={() => dealCards()}>Deal</button>
+            </div>
+            
+            
         </div>
     );
 

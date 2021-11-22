@@ -59,6 +59,17 @@
     right: 5vw;
   }
 
+  .gameText{
+    display: flex;
+    justify-content: center;
+  }
+
+  .gameButtons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   /* Large screens like sideway phone tilt, tablets, etc. */
   @media (min-width: 750px){
     .playingCard {
@@ -86,7 +97,7 @@
     .playerHand{
       display: inline;
       position: relative;
-      top: 55vh;
+      top: 65vh;
       left: 5vw;
     }
     .dealer{
@@ -112,5 +123,16 @@
     
   } 
 
+
+  /* Large screens for web browsers */
+  @media (min-width: 1200px){
+    .playingCard{
+      max-width: 8%;
+    }
+    .overlappingCard{
+      position: relative;
+      right: 6%;
+    }
+  }
 
 
