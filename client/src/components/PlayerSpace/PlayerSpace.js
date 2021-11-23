@@ -123,7 +123,7 @@ const PlayerSpace = () => {
                 {showHitStandButtons? 
                 <div className={classes.gameButtons}>
                     <button onClick={() => setNextTurn()}>Hit</button>
-                    <button>Stand</button>
+                    <button onClick={() => setNextTurn()}>Stand</button>
                 </div> 
                 : ''}
             </div>
