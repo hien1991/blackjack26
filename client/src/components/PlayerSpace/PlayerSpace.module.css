@@ -45,7 +45,6 @@
   .dealerImg{
     max-width: 100%
   }
-
   .dealerCard{
     max-width: 20%;
     display: inline;
@@ -57,6 +56,10 @@
     display: inline;
     position: relative;
     right: 5vw;
+  }
+
+  .gameTextAvatar{
+    max-width: 40%;
   }
 
   .gameText{
@@ -97,7 +100,7 @@
     .playerHand{
       display: inline;
       position: relative;
-      top: 65vh;
+      top: 57vh;
       left: 5vw;
     }
     .dealer{
@@ -105,6 +108,9 @@
       top: 5vh;
       left: 24vw;
       max-width: 20%;
+    }
+    .gameTextAvatar{
+      max-width: 40%;
     }
     .dealerCard{
       max-width: 50%;

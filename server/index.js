@@ -20,11 +20,13 @@ let curentCardSlots = [];
         - rename project
         - make cards a separate component- it could be reused later. Or maybe make a playerHand a separate one
           so I don't have to make 4 copy/paste
-        - Re-align the player cards/bets/names. I guess make 4 separate classes/IDs and position them accordingly.
         - Make function that assigns player1/2/3/spectate to socketConnection map based on current size
         - Make select character screen: it says "select your character" as a top header, and then has a list of
           "available" and "taken". Then add an extra "spectate" button that will make user go into game without being
           any character in case all players are taken.
+        - Reconnection logic: if you reconnect, it doesn't send the 'blackjackjoin' signal again... not sure about 'connect'.
+          But either way, the online status won't update, but the reconnected player can still make moves which might 
+          contradict the game if it thinks the player is disconnected & already re-adjusted its logic.
 
         - Bookmark: make the hit/stand show up after dealing and hide deal button, have the game go through each turn with 
           displayed text stating which player to go. For now just make hit/stand available to everyone as there's no assigned 

@@ -10,7 +10,6 @@ let gameDeck = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's1
 'h4', 'h5', 'h6', 'h7', 'h8', 'h9', 'h10', 'h11', 'h12', 'h13', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6',
 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13'];
 let initialShuffle = false;
-let showHitStandButtons = false;
 const deckMax = 52;
 
 const PlayerSpace = () => {
@@ -18,6 +17,8 @@ const PlayerSpace = () => {
     const socket = useRef(null);
     const ENDPOINT = '/';
     const [connectionsCount, setConnectionsCount] = useState('');
+    const [showHitStandButtons, setShowHitStandButtons] = useState(false);
+    const [currentTurn, setCurrentTurn] = useState(0); //0: waiting, 1-3: player, 4: dealer
     const [cardSlots, setCardSlots] = useState(() => ['back', 'back', 'back', 'back', 'back', 'back', 'back', 'back']);
 
     useEffect(() => {
@@ -46,6 +47,32 @@ const PlayerSpace = () => {
         return 'images/classic-cards/' + cardSlots[slot] + '.png';
     }
 
+    const setNextTurn = () => {
+        if(parseInt(currentTurn) < 4){
+            setCurrentTurn(currentTurn + 1);
+            setShowHitStandButtons(true);
+        }
+        else{
+            setCurrentTurn(0);
+            setShowHitStandButtons(false);
+        }
+    }
+
+    const getGameText = () => {
+        switch(currentTurn){
+            case 1:
+                return <div><img className={classes.gameTextAvatar} src='images/joe.png' alt='player'></img> 's turn</div>;
+            case 2:
+                return <div><img className={classes.gameTextAvatar} src='images/caveman.png' alt='player'></img> 's turn</div>;
+            case 3:
+                return <div><img  className={classes.gameTextAvatar}src='images/wheelchair.jpeg' alt='player'></img> 's turn</div>;
+            case 4:
+                return 'Dealer\'s turn. Drizzy is thinking...';
+            default:
+                return 'Waiting on players...'
+        }
+    }
+
     /* Because the html div reloads/re-renders frequently, we can't simply bind {popCardFromdeck()} or it'll keep popping cards
        despite us not directly telling it to. So we need to set up a system where we keep track of how many cards are needed
        in the game, and then shuffle & pop the deck and deal them as assigned variables that won't change until a specific
@@ -61,6 +88,7 @@ const PlayerSpace = () => {
         setCardSlots(newCardSlots);
         //Need to set to "newCardSlots" instead of the state hook var cardSlots because it's still loading(?)
         socket.current.emit('dealtCards', {newCardSlots, gameDeck}, () => { });
+        setNextTurn();
     }
 
 
@@ -89,18 +117,20 @@ const PlayerSpace = () => {
                 <div className={`${classes.player} ${classes.leftPlayer}`}><img className={classes.player} src='images/joe.png' alt="player" /></div>
             </div>
             <div className={classes.gameText}>
-                <h2>Waiting on players...</h2>
+                <h2>{getGameText()}</h2>
             </div>
             <div>
                 {showHitStandButtons? 
                 <div className={classes.gameButtons}>
-                    <button>Hit</button>
+                    <button onClick={() => setNextTurn()}>Hit</button>
                     <button>Stand</button>
                 </div> 
                 : ''}
             </div>
             <div className={classes.gameButtons}>
+                {!showHitStandButtons? 
                 <button onClick={() => dealCards()}>Deal</button>
+                : ''}
             </div>
             
             
