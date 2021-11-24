@@ -73,6 +73,13 @@
     align-items: center;
   }
 
+  .hitButton{
+    width: 10%;
+  }
+  .buttonImg{
+    max-width: 55%;
+  }
+
   /* Large screens like sideway phone tilt, tablets, etc. */
   @media (min-width: 750px){
     .playingCard {
@@ -125,6 +132,13 @@
       position: relative;
       left: 15vw;
       bottom: 6.85vh;
+    }
+
+    .hitButton{
+      width: 15%
+    }
+    .buttonImg{
+      max-width: 65%;
     }
     
   } 

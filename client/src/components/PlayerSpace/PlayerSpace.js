@@ -187,8 +187,12 @@ const PlayerSpace = () => {
             <div>
                 {showHitStandButtons? 
                 <div className={classes.gameButtons}>
-                    <button onClick={() => setNextTurn()}>Hit</button>
-                    <button onClick={() => setNextTurn()}>Stand</button>
+                    <button className={classes.hitButton} onClick={() => setNextTurn()}>
+                        <img className={classes.buttonImg} src="images/hit.png" alt="hit" /><br/>Hit
+                    </button>
+                    <button className={classes.hitButton} onClick={() => setNextTurn()}>
+                        <img className={classes.buttonImg} src="images/stand.png" alt="stand" /><br/>Stand
+                    </button>
                 </div> 
                 : ''}
             </div>
