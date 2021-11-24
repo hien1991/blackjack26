@@ -34,9 +34,7 @@ const PlayerSpace = () => {
         socket.current.on('gameTextTransmit', (gameSession) => {
             gameTextSetter(gameSession.currentGameText);
             currentTurn = gameSession.currentGameTurn;
-
-            console.log("received turn is: " + gameSession.currentGameTurn);
-            console.log("turn is: " + currentTurn);
+            showHideGameButtons();
         });
 
         //Make sure cards dealt & deck & text are synched for all players
@@ -47,6 +45,7 @@ const PlayerSpace = () => {
             gameDeck = currentSessionData.gameDeck;
             gameTextSetter(currentSessionData.gameText);
             currentTurn = currentSessionData.currentGameTurn;
+            showHideGameButtons();
             initialShuffle = true;
 
             //If it's a player's turn, we want to disable deal button, enable hit/stand buttons.
@@ -64,18 +63,27 @@ const PlayerSpace = () => {
         return 'images/classic-cards/' + cardSlots[slot] + '.png';
     }
 
+    const showHideGameButtons = () => {
+        if(currentTurn === 0){
+            setShowHitStandButtons(false);
+        }
+        else {
+            setShowHitStandButtons(true);
+        }
+    }
+
     const setNextTurn = () => {
         if(currentTurn >= 4){
             currentTurn = 0;
-            setShowHitStandButtons(false);
+            showHideGameButtons();
         }
         else if (currentTurn === 0){
-            setShowHitStandButtons(true);
             currentTurn++;
+            showHideGameButtons();
         }
         else{
-            setShowHitStandButtons(true);
             currentTurn++;
+            showHideGameButtons();
         }
 
         updateGameText();
