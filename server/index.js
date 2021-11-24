@@ -11,6 +11,8 @@ const io = socketio(server);
 let socketConnections = new Map();
 let currentDeck = [];
 let curentCardSlots = [];
+let currentGameText = '';
+let currentTurn = 0;
 
 
 /*
@@ -27,19 +29,21 @@ let curentCardSlots = [];
         - Reconnection logic: if you reconnect, it doesn't send the 'blackjackjoin' signal again... not sure about 'connect'.
           But either way, the online status won't update, but the reconnected player can still make moves which might 
           contradict the game if it thinks the player is disconnected & already re-adjusted its logic.
-
-        - Bookmark: make the hit/stand show up after dealing and hide deal button, have the game go through each turn with 
-          displayed text stating which player to go. For now just make hit/stand available to everyone as there's no assigned 
-          players. For now, make both hit/stand just proceed to next player's turn. For now just treat dealer like another 
-          player. After a complete round of hit/stand, update text to say "??? won! Waiting on players..." and make deal button 
-          available again.
-            - After, make it so that when it sees 0 players online, it goes back to back-card state with deal button available.
+        - Aces currently only count as 1.
+        - Card counting logic created, but not put in any place yet. Also still need to socket emit to all players to sync.
+          Or maybe we don't need to use sockets since all players are already card-synced, so long as we put the card counting
+          functionality in the correct spot that will update for all players.
 
 
+
+        - The way "cardSlots" is used seems like it's not really being utilized as much as the temp "newCardSlots" and the
+          socket emit that comes from it. 
         - Change the chat logo & the SayOk thing to my own custom thing.
         - Can comment out the join component stuff with all the user/room emits
         - I think it disconnects you if you push browser aside on web or multitask on mobile. May need to find a way
           to reconnect... but then again I feel like most web games have this issue so maybe it's fine.
+        - Because of how state variables tend to lag behind, I find myself using their setter, but then emitting to 
+          socket io a temp one that has the up-to-date value instead. Doing this to sync cards & playerText.
 
 */
 if (process.env.PROD) {
@@ -68,19 +72,35 @@ io.on('connect', (socket) => {
             connectionSize: socketConnections.size
         });
 
-        //Syncs newly connected players to current game session cards
+        //Syncs newly connected players to current game session cards if any session data saved
         if(currentDeck.length > 0 && curentCardSlots.length > 0){
             socket.emit('cardsDealt', {
                 newCardSlots: curentCardSlots,
-                gameDeck: currentDeck
+                gameDeck: currentDeck,
+                gameText: currentGameText,
+                currentGameTurn: currentTurn
             });
         }
 
         callback();
     });
 
+    socket.on('gameTextUpdate', (data) => {
+        console.log('gameTextUpdate io received! data: ');
+        console.log(data);
+        currentGameText = data.gameText;
+        currentTurn = data.turn;
+        console.log(currentGameText);
+        //broadcast cards to all except sender since it came from them
+        socket.broadcast.emit('gameTextTransmit', {
+            currentGameText: currentGameText,
+            currentGameTurn: currentTurn
+        });
+        //callback();
+    });
+
     socket.on('dealtCards', ({newCardSlots, gameDeck}, callback) => {
-        console.log("cardsDealt io received!")
+        console.log("dealtCards io received!")
         console.log(newCardSlots);
         console.log(gameDeck);
         curentCardSlots = newCardSlots;
@@ -88,7 +108,9 @@ io.on('connect', (socket) => {
         //broadcast cards to all except sender since it came from them
         socket.broadcast.emit('cardsDealt', {
             newCardSlots: newCardSlots, 
-            gameDeck: gameDeck
+            gameDeck: gameDeck,
+            gameText: currentGameText,
+            currentGameTurn: currentTurn
         });
         callback();
     });

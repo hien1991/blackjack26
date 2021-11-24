@@ -9,16 +9,18 @@ let gameDeck = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's1
 'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 'h1', 'h2', 'h3',
 'h4', 'h5', 'h6', 'h7', 'h8', 'h9', 'h10', 'h11', 'h12', 'h13', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6',
 'c7', 'c8', 'c9', 'c10', 'c11', 'c12', 'c13'];
+let playerCardValues = [0, 0, 0, 0]
 let initialShuffle = false;
 const deckMax = 52;
+let currentTurn = 0; //0: waiting, 1-3: player, 4: dealer
 
 const PlayerSpace = () => {
 
     const socket = useRef(null);
     const ENDPOINT = '/';
+    const [gameText, gameTextSetter] = useState('');
     const [connectionsCount, setConnectionsCount] = useState('');
-    const [showHitStandButtons, setShowHitStandButtons] = useState(false);
-    const [currentTurn, setCurrentTurn] = useState(0); //0: waiting, 1-3: player, 4: dealer
+    const [showHitStandButtons, setShowHitStandButtons] = useState(false); //show deal-button tied to this
     const [cardSlots, setCardSlots] = useState(() => ['back', 'back', 'back', 'back', 'back', 'back', 'back', 'back']);
 
     useEffect(() => {
@@ -29,13 +31,28 @@ const PlayerSpace = () => {
             setConnectionsCount(connections.connectionSize);
         });
 
-        //Make sure cards dealt & deck are synched for all players
-        socket.current.on('cardsDealt', (cards) => {
-            console.log("io emit received for cardsDealt!");
-            console.log(cards);
-            setCardSlots(cards.newCardSlots);
-            gameDeck = cards.gameDeck;
+        socket.current.on('gameTextTransmit', (gameSession) => {
+            gameTextSetter(gameSession.currentGameText);
+            currentTurn = gameSession.currentGameTurn;
+
+            console.log("received turn is: " + gameSession.currentGameTurn);
+            console.log("turn is: " + currentTurn);
+        });
+
+        //Make sure cards dealt & deck & text are synched for all players
+        socket.current.on('cardsDealt', (currentSessionData) => {
+            //console.log("io emit received for cardsDealt!");
+            //console.log(currentSessionData);
+            setCardSlots(currentSessionData.newCardSlots);
+            gameDeck = currentSessionData.gameDeck;
+            gameTextSetter(currentSessionData.gameText);
+            currentTurn = currentSessionData.currentGameTurn;
             initialShuffle = true;
+
+            //If it's a player's turn, we want to disable deal button, enable hit/stand buttons.
+            if(currentSessionData.gameText.includes('turn')){
+                setShowHitStandButtons(true);
+            }
         });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,28 +65,57 @@ const PlayerSpace = () => {
     }
 
     const setNextTurn = () => {
-        if(parseInt(currentTurn) < 4){
-            setCurrentTurn(currentTurn + 1);
-            setShowHitStandButtons(true);
-        }
-        else{
-            setCurrentTurn(0);
+        if(currentTurn >= 4){
+            currentTurn = 0;
             setShowHitStandButtons(false);
         }
+        else if (currentTurn === 0){
+            setShowHitStandButtons(true);
+            currentTurn++;
+        }
+        else{
+            setShowHitStandButtons(true);
+            currentTurn++;
+        }
+
+        updateGameText();
+        socket.current.emit('gameTextUpdate', {gameText: updateGameText(), turn: currentTurn}, () => { });
     }
 
-    const getGameText = () => {
+    const updateGameText = () => {
+        // switch(currentTurn){
+        //     case 1:
+        //         gameText = <div><img  className={classes.gameTextAvatar}src='images/wheelchair.jpeg' alt='player'></img> 's turn</div>;
+        //         break;
+        //     case 2:
+        //         gameText = <div><img className={classes.gameTextAvatar} src='images/caveman.png' alt='player'></img> 's turn</div>;
+        //         break;
+        //     case 3:
+        //         gameText = <div><img className={classes.gameTextAvatar} src='images/joe.png' alt='player'></img> 's turn</div>;
+        //         break;
+        //     case 4:
+        //         gameText = 'Dealer\'s turn. Drizzy is thinking...';
+        //         break;
+        //     default:
+        //         gameText = 'Waiting on players...'
+        //         break;
+        // }
         switch(currentTurn){
             case 1:
-                return <div><img className={classes.gameTextAvatar} src='images/joe.png' alt='player'></img> 's turn</div>;
+                gameTextSetter('Wheelchair\'s turn!');
+                return 'Wheelchair\'s turn!';
             case 2:
-                return <div><img className={classes.gameTextAvatar} src='images/caveman.png' alt='player'></img> 's turn</div>;
+                gameTextSetter('Caveman\'s turn!');
+                return 'Caveman\'s turn!';
             case 3:
-                return <div><img  className={classes.gameTextAvatar}src='images/wheelchair.jpeg' alt='player'></img> 's turn</div>;
+                gameTextSetter('Blackjack Joe\'s turn!');
+                return 'Blackjack Joe\'s turn!';
             case 4:
+                gameTextSetter('Dealer\'s turn. Drizzy is thinking...');
                 return 'Dealer\'s turn. Drizzy is thinking...';
             default:
-                return 'Waiting on players...'
+                gameTextSetter('Waiting on players...');
+                return 'Waiting on players...';
         }
     }
 
@@ -88,7 +134,18 @@ const PlayerSpace = () => {
         setCardSlots(newCardSlots);
         //Need to set to "newCardSlots" instead of the state hook var cardSlots because it's still loading(?)
         socket.current.emit('dealtCards', {newCardSlots, gameDeck}, () => { });
+        countPlayerCards(newCardSlots);
         setNextTurn();
+    }
+
+    const countPlayerCards = (cardSlots) => {
+        //substring(1) -> get value by removing 1st char from cardSlots, in format like "d12" or "h7"
+        let player1Cards = parseInt(cardSlots[0].substring(1)) + parseInt(cardSlots[1].substring(1));
+        let player2Cards = parseInt(cardSlots[2].substring(1)) + parseInt(cardSlots[3].substring(1));
+        let player3Cards = parseInt(cardSlots[4].substring(1)) + parseInt(cardSlots[5].substring(1));
+        let dealerCards = parseInt(cardSlots[6].substring(1)) + parseInt(cardSlots[7].substring(1));
+        playerCardValues = [player1Cards, player2Cards, player3Cards, dealerCards];
+        //console.log('player card values: ' + playerCardValues);
     }
 
 
@@ -117,7 +174,7 @@ const PlayerSpace = () => {
                 <div className={`${classes.player} ${classes.leftPlayer}`}><img className={classes.player} src='images/joe.png' alt="player" /></div>
             </div>
             <div className={classes.gameText}>
-                <h2>{getGameText()}</h2>
+                <h2>{(gameText !== '')? gameText : 'Waiting on players...'}</h2>
             </div>
             <div>
                 {showHitStandButtons? 
