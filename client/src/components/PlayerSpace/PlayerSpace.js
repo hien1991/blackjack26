@@ -146,6 +146,9 @@ const PlayerSpace = () => {
         setNextTurn();
     }
 
+
+    /* return function only needed by <StatsDisplay> since it has cardSlots sent in by sockets but not
+       playerCardValues upon joining/reconnecting. Other places just need playerCardValues set. */
     const countPlayerCards = (cardSlots) => {
         //substring(1) -> get value by removing 1st char from cardSlots, in format like "d12" or "h7"
         let player1Cards = parseInt(cardSlots[0].substring(1)) + parseInt(cardSlots[1].substring(1));
@@ -153,13 +156,13 @@ const PlayerSpace = () => {
         let player3Cards = parseInt(cardSlots[4].substring(1)) + parseInt(cardSlots[5].substring(1));
         let dealerCards = parseInt(cardSlots[6].substring(1)) + parseInt(cardSlots[7].substring(1));
         playerCardValues = [player1Cards, player2Cards, player3Cards, dealerCards];
-        //console.log('player card values: ' + playerCardValues);
+        return playerCardValues;
     }
 
 
     return (
         <div>
-            <StatsDisplay connectionsCount={connectionsCount} playerCardValues={playerCardValues}/>
+            <StatsDisplay connectionsCount={connectionsCount} playerCardValues={countPlayerCards(cardSlots)}/>
             <div className={classes.dealer}>
                 <img className={classes.dealerImg} src='images/drakeYes.png' alt="dealer" />
                 <img className={classes.dealerCard} src='images/classic-cards/back.png' alt="card" />

@@ -33,6 +33,7 @@ let currentTurn = 0;
         - Card counting logic created, but not put in any place yet. Also still need to socket emit to all players to sync.
           Or maybe we don't need to use sockets since all players are already card-synced, so long as we put the card counting
           functionality in the correct spot that will update for all players.
+        - Card counting logic works, but is out of synch for new joining players who want to spectate or are reconnecting. 
 
 
 
