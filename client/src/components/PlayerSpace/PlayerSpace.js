@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import classes from './PlayerSpace.module.css';
-
+import StatsDisplay from '../StatsDisplay/StatsDisplay';
 
 //Needs to be up here, or it'll re-initialize upon every re-render
 let gameDeck = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13',
@@ -159,7 +159,7 @@ const PlayerSpace = () => {
 
     return (
         <div>
-            <div className={classes.connectionCount}>Online: {connectionsCount}</div>
+            <StatsDisplay connectionsCount={connectionsCount} playerCardValues={playerCardValues}/>
             <div className={classes.dealer}>
                 <img className={classes.dealerImg} src='images/drakeYes.png' alt="dealer" />
                 <img className={classes.dealerCard} src='images/classic-cards/back.png' alt="card" />

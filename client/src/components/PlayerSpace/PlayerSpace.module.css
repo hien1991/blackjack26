@@ -24,8 +24,8 @@
     left: 12vw;
   }
 
-  .connectionCount{
-    position: relative;
+  .gameStats{
+    position: absolute;
     left: 1%;
     top: 1vh;
   }
@@ -37,8 +37,8 @@
 
   .dealer{
     position: relative;
-    top: 5vh;
-    left: 24vw;
+    top: 12vh;
+    left: 30vw;
     max-width: 40%;
   }
   /* Not sure why, but taking this out will change the size, but changing only this won't work. */
@@ -112,8 +112,8 @@
     }
     .dealer{
       position: relative;
-      top: 5vh;
-      left: 24vw;
+      top: 17vh;
+      left: 25vw;
       max-width: 20%;
     }
     .gameTextAvatar{
