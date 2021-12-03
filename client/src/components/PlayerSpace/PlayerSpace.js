@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import io from 'socket.io-client';
 import classes from './PlayerSpace.module.css';
 import StatsDisplay from '../StatsDisplay/StatsDisplay';
+import Players from '../Players/Players';
 
 //Needs to be up here, or it'll re-initialize upon every re-render
 let gameDeck = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13',
@@ -21,7 +22,12 @@ const PlayerSpace = () => {
     const [gameText, gameTextSetter] = useState('');
     const [connectionsCount, setConnectionsCount] = useState('');
     const [showHitStandButtons, setShowHitStandButtons] = useState(false); //show deal-button tied to this
-    const [cardSlots, setCardSlots] = useState(() => ['back', 'back', 'back', 'back', 'back', 'back', 'back', 'back']);
+
+    /* 0-1: player1 cards, 2-3: player2 cards, 4-5: player3 cards, 6-7: dealer cards, 8-12: player1 hit cards,
+       13-17: player2 hit cards, 18-22: player3 hit cards, 23-27: dealer hit cards */
+    const [cardSlots, setCardSlots] = useState(() => ['back', 'back', 'back', 'back', 'back', 'back', 'back', 'back', 
+    '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']);
+
 
     useEffect(() => {
         socket.current = io.connect(ENDPOINT);
@@ -58,11 +64,6 @@ const PlayerSpace = () => {
     }, []);
 
 
-    //cards are in format c##, h##, s##, d##, where '##' can be 1-13
-    const getCardDealt = (slot) => {
-        return 'images/classic-cards/' + cardSlots[slot] + '.png';
-    }
-
     const showHideGameButtons = () => {
         if(currentTurn === 0){
             setShowHitStandButtons(false);
@@ -91,23 +92,9 @@ const PlayerSpace = () => {
     }
 
     const updateGameText = () => {
-        // switch(currentTurn){
         //     case 1:
         //         gameText = <div><img  className={classes.gameTextAvatar}src='images/wheelchair.jpeg' alt='player'></img> 's turn</div>;
         //         break;
-        //     case 2:
-        //         gameText = <div><img className={classes.gameTextAvatar} src='images/caveman.png' alt='player'></img> 's turn</div>;
-        //         break;
-        //     case 3:
-        //         gameText = <div><img className={classes.gameTextAvatar} src='images/joe.png' alt='player'></img> 's turn</div>;
-        //         break;
-        //     case 4:
-        //         gameText = 'Dealer\'s turn. Drizzy is thinking...';
-        //         break;
-        //     default:
-        //         gameText = 'Waiting on players...'
-        //         break;
-        // }
         switch(currentTurn){
             case 1:
                 gameTextSetter('Wheelchair\'s turn!');
@@ -132,18 +119,58 @@ const PlayerSpace = () => {
        in the game, and then shuffle & pop the deck and deal them as assigned variables that won't change until a specific
        game action is taken.  */
     const dealCards = () => {
-        let cardsInPlay = 8; //un-hardcode this
-        let newCardSlots = ['', '', '', '', '', '', '', ''];
+        let cardsInPlay = 8; //unhardcode this to allow 1 or 2 players... this forces 3 players + dealer.
+        let newCardSlots = ['', '', '', '', '', '', '', '',
+        '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
 
-        shuffleDeck();
+        shuffleDeckIfNeeded(); 
         for (var i = 0; i < cardsInPlay; i++) {
             newCardSlots[i] = gameDeck.pop();
         }
         setCardSlots(newCardSlots);
         //Need to set to "newCardSlots" instead of the state hook var cardSlots because it's still loading(?)
         socket.current.emit('dealtCards', {newCardSlots, gameDeck}, () => { });
-        countPlayerCards(newCardSlots);
+        //countPlayerCards(newCardSlots); //test after delete & delete if no effect.. the state/hook var might be useless...
         setNextTurn();
+    }
+
+
+    //When player hits 'hit' button, we find the first open 'hit card slot' to know where to display the 'hit' card.
+    const findFirstOpenHitCardSlot = (hitCardSlotMin) => {
+        for(let i = 0; i < 5; i++){
+            if(cardSlots[hitCardSlotMin+i] === '0'){
+                return hitCardSlotMin+i;
+            }
+        }
+    }
+
+    const hit = (cardSlots) => {
+        //Find the player/dealer's hit-card slots depending on who's turn it is, then find the first hit card slot open
+        let hitCardSlot = 0;
+        switch(currentTurn){
+            case 1: //player 1
+                hitCardSlot = findFirstOpenHitCardSlot(8); 
+                break;
+            case 2: //player 2
+                hitCardSlot = findFirstOpenHitCardSlot(13);
+                break;
+            case 3: //player 3
+                hitCardSlot = findFirstOpenHitCardSlot(18);
+                break;
+            default: 
+                hitCardSlot = findFirstOpenHitCardSlot(23);
+                break;
+        }
+
+        let newCardSlots = [cardSlots[0], cardSlots[1], cardSlots[2], cardSlots[3], cardSlots[4], cardSlots[5], cardSlots[6], cardSlots[7],
+        cardSlots[8], cardSlots[9], cardSlots[10], cardSlots[11], cardSlots[12], cardSlots[13], cardSlots[14], cardSlots[15],
+        cardSlots[16], cardSlots[17], cardSlots[18], cardSlots[19], cardSlots[20], cardSlots[21], cardSlots[22], cardSlots[23], 
+        cardSlots[24], cardSlots[25], cardSlots[26], cardSlots[27]];
+        newCardSlots[hitCardSlot] = gameDeck.pop();
+        setCardSlots(newCardSlots);
+        
+        //Need to set to "newCardSlots" instead of the state hook var cardSlots because it's still loading(?)
+        socket.current.emit('dealtCards', {newCardSlots, gameDeck}, () => { });
     }
 
 
@@ -163,34 +190,14 @@ const PlayerSpace = () => {
     return (
         <div>
             <StatsDisplay connectionsCount={connectionsCount} playerCardValues={countPlayerCards(cardSlots)}/>
-            <div className={classes.dealer}>
-                <img className={classes.dealerImg} src='images/drakeYes.png' alt="dealer" />
-                <img className={classes.dealerCard} src='images/classic-cards/back.png' alt="card" />
-                <img className={`${classes.dealerOverlapCard}`} src={getCardDealt(7)} alt="card" />
-            </div>
-            <div className={classes.playerHand}>
-                <img className={classes.playingCard} src={getCardDealt(0)} alt="card" />
-                <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(1)} alt="card" />
-                <div className={classes.player}><img className={classes.player} src='images/wheelchair.jpeg' alt="player" /> 
-            </div>
-            </div>
-            <div className={classes.playerHand}>
-                <img className={classes.playingCard} src={getCardDealt(2)} alt="card" />
-                <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(3)} alt="card" />
-                <div className={classes.player}><img className={classes.player} src='images/caveman.png' alt="player" /></div>
-            </div>
-            <div className={classes.playerHand}>
-                <img className={classes.playingCard} src={getCardDealt(4)} alt="card" />
-                <img className={`${classes.playingCard} ${classes.overlappingCard}`} src={getCardDealt(5)} alt="card" />
-                <div className={`${classes.player} ${classes.leftPlayer}`}><img className={classes.player} src='images/joe.png' alt="player" /></div>
-            </div>
+            <Players cardSlots={cardSlots} />
             <div className={classes.gameText}>
                 <h2>{(gameText !== '')? gameText : 'Waiting on players...'}</h2>
             </div>
             <div>
                 {showHitStandButtons? 
                 <div className={classes.gameButtons}>
-                    <button className={classes.hitButton} onClick={() => setNextTurn()}>
+                    <button className={classes.hitButton} onClick={() => hit(cardSlots)}>
                         <img className={classes.buttonImg} src="images/hit.png" alt="hit" /><br/>Hit
                     </button>
                     <button className={classes.hitButton} onClick={() => setNextTurn()}>
@@ -209,9 +216,9 @@ const PlayerSpace = () => {
         </div>
     );
 
-    function shuffleDeck(){
+    function shuffleDeckIfNeeded(){
         //only re-fill & shuffle if cards are running low
-        if(gameDeck.length < (deckMax / 4) || initialShuffle === false){
+        if(gameDeck.length < (deckMax / 3) || initialShuffle === false){
             console.log("shuffling deck!");
             gameDeck = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's9', 's10', 's11', 's12', 's13',
             'd1', 'd2', 'd3', 'd4', 'd5', 'd6', 'd7', 'd8', 'd9', 'd10', 'd11', 'd12', 'd13', 'h1', 'h2', 'h3',

@@ -1,28 +1,7 @@
 
 
 
-  .player{
-    display: inline;
-    max-width: 7%;
-    position: relative;
-    right: 8vw;
-    top: 5vh;
-  }
 
-  .leftPlayer{
-
-  }
-
-  .playingCard {
-    max-width: 14%;
-  }
-
-  .playerHand{
-    display: inline;
-    position: relative;
-    top: 55vh;
-    left: 12vw;
-  }
 
   .gameStats{
     position: absolute;
@@ -30,33 +9,6 @@
     top: 1vh;
   }
 
-  .overlappingCard{
-    position: relative;
-    right: 8%;
-  }
-
-  .dealer{
-    position: relative;
-    top: 12vh;
-    left: 30vw;
-    max-width: 40%;
-  }
-  /* Not sure why, but taking this out will change the size, but changing only this won't work. */
-  .dealerImg{
-    max-width: 100%
-  }
-  .dealerCard{
-    max-width: 20%;
-    display: inline;
-    position: relative;
-    left: 1vw
-  }
-  .dealerOverlapCard{
-    max-width: 20%;
-    display: inline;
-    position: relative;
-    right: 5vw;
-  }
 
   .gameTextAvatar{
     max-width: 40%;
@@ -89,49 +41,8 @@
 
   /* Average phone width */
   @media (min-width: 320px) and (max-width: 480px) {
-    .overlappingCard{
-      position: relative;
-      right: 11%;
-    }
-    .player{
-      display: inline;
-      max-width: 8%;
-      position: relative;
-      right: 12vw;
-      top: 2.25vh;
-    }
-    .leftPlayer{
-      left: 88%;
-      top: -2vh;
-    }
-    .playerHand{
-      display: inline;
-      position: relative;
-      top: 57vh;
-      left: 5vw;
-    }
-    .dealer{
-      position: relative;
-      top: 17vh;
-      left: 25vw;
-      max-width: 20%;
-    }
     .gameTextAvatar{
       max-width: 40%;
-    }
-    .dealerCard{
-      max-width: 50%;
-      display: inline;
-      position: relative;
-      left: 22vw;
-      bottom: 6.85vh;
-    }
-    .dealerOverlapCard{
-      max-width: 50%;
-      display: inline;
-      position: relative;
-      left: 15vw;
-      bottom: 6.85vh;
     }
 
     .hitButton{
@@ -146,13 +57,6 @@
 
   /* Large screens for web browsers */
   @media (min-width: 1200px){
-    .playingCard{
-      max-width: 8%;
-    }
-    .overlappingCard{
-      position: relative;
-      right: 6%;
-    }
   }
 
 

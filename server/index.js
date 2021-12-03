@@ -19,9 +19,7 @@ let currentTurn = 0;
     To-do:
         - remove original authors git/info on package.json & everywhere else
         - Add sass support, this time try deleting lock & node_modules in client folder
-        - rename project
-        - make cards a separate component- it could be reused later. Or maybe make a playerHand a separate one
-          so I don't have to make 4 copy/paste
+        - Make more separate components where possible
         - Make function that assigns player1/2/3/spectate to socketConnection map based on current size
         - Make select character screen: it says "select your character" as a top header, and then has a list of
           "available" and "taken". Then add an extra "spectate" button that will make user go into game without being
@@ -30,13 +28,10 @@ let currentTurn = 0;
           But either way, the online status won't update, but the reconnected player can still make moves which might 
           contradict the game if it thinks the player is disconnected & already re-adjusted its logic.
         - Aces currently only count as 1.
-        - Card counting logic created, but not put in any place yet. Also still need to socket emit to all players to sync.
-          Or maybe we don't need to use sockets since all players are already card-synced, so long as we put the card counting
-          functionality in the correct spot that will update for all players.
-        - Card counting logic works, but is out of synch for new joining players who want to spectate or are reconnecting. 
+        - Bookmark: Need to make the card counting system include the hit card slots.
 
 
-
+        - Not sure if we need to set a shuffleCardsIfNeeded() after each hit. Not sure if one hit can drain the deck.
         - The way "cardSlots" is used seems like it's not really being utilized as much as the temp "newCardSlots" and the
           socket emit that comes from it. 
         - Change the chat logo & the SayOk thing to my own custom thing.
@@ -45,6 +40,7 @@ let currentTurn = 0;
           to reconnect... but then again I feel like most web games have this issue so maybe it's fine.
         - Because of how state variables tend to lag behind, I find myself using their setter, but then emitting to 
           socket io a temp one that has the up-to-date value instead. Doing this to sync cards & playerText.
+        - As long as you're playing with one deck, it shouldn't be possible to need more than 7 cards to get 26+.
 
 */
 if (process.env.PROD) {

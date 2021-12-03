@@ -16,9 +16,9 @@ export default class StatsDisplay extends React.Component {
         //console.log("rendering! playerCardValues is: " + this.props.playerCardValues);
         return <div className='gameStats'>
             <div>Online: {this.props.connectionsCount}</div>
-            <div>Player1: {this.props.playerCardValues[0]}</div>
-            <div>Player2: {this.props.playerCardValues[1]}</div>
-            <div>Player3: {this.props.playerCardValues[2]}</div>
+            <div>Player1: {this.props.playerCardValues[0] | 0}</div>
+            <div>Player2: {this.props.playerCardValues[1] | 0}</div>
+            <div>Player3: {this.props.playerCardValues[2] | 0}</div>
             <div>Dealer: ???</div>
         </div>;
     }

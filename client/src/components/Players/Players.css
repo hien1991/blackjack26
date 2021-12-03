@@ -1,0 +1,308 @@
+
+
+
+  .player{
+    display: inline;
+    max-width: 7%;
+    position: relative;
+    right: 8vw;
+    top: 5vh;
+  }
+
+  .playingCard {
+    max-width: 14%;
+  }
+
+  .playerHand{
+    display: inline;
+    position: relative;
+    top: 55vh;
+    left: 12vw;
+  }
+
+  .gameStats{
+    position: absolute;
+    left: 1%;
+    top: 1vh;
+  }
+
+  .overlappingCard{
+    position: relative;
+    right: 8%;
+  }
+  .p4overlappingCard{
+    position: relative;
+    right: 7.5%;
+  }
+  .overlappingCard2{
+    position: absolute;
+    min-width: 37.25%;
+    right: 47%;
+  }
+  .overlappingCard3{
+    position: absolute;
+    min-width: 37.25%;
+    right: 40%;
+  }
+  .overlappingCard4{
+    position: absolute;
+    min-width: 37.25%;
+    right: 33%;
+  }
+  .overlappingCard5{
+    position: absolute;
+    min-width: 37.25%;
+    right: 26%;
+  }
+  .overlappingCard6{
+    position: absolute;
+    min-width: 37.25%;
+    right: 19%;
+  }
+  .p4overlappingCard2{
+    max-width: 14%;
+    position: absolute;
+    min-width: 37.25%;
+    right: 47%;
+  }
+  .p4overlappingCard3{
+    max-width: 14%;
+    position: absolute;
+    min-width: 37.25%;
+    right: 40%;
+  }
+  .p4overlappingCard4{
+    max-width: 14%;
+    position: absolute;
+    min-width: 37.25%;
+    right: 33%;
+  }
+  .p4overlappingCard5{
+    max-width: 14%;
+    position: absolute;
+    min-width: 37.25%;
+    right: 26%;
+  }
+  .p4overlappingCard6{
+    max-width: 14%;
+    position: absolute;
+    min-width: 37.25%;
+    right: 19%;
+  }
+  .dealerOverlappingCard2{
+    position: absolute;
+    max-width: 20.2%;
+    right: 40%;
+  }
+  .dealerOverlappingCard3{
+    position: absolute;
+    max-width: 20.2%;
+    right: 35%;
+  }
+  .dealerOverlappingCard4{
+    position: absolute;
+    max-width: 20.2%;
+    right: 30%;
+  }
+  .dealerOverlappingCard5{
+    position: absolute;
+    max-width: 20.2%;
+    right: 25%;
+  }
+  .dealerOverlappingCard6{
+    position: absolute;
+    max-width: 20.2%;
+    right: 20%;
+  }
+
+  .dealer{
+    position: relative;
+    top: 12vh;
+    left: 30vw;
+    max-width: 40%;
+  }
+  /* Not sure why, but taking this out will change the size, but changing only this won't work. */
+  .dealerImg{
+    max-width: 100%
+  }
+  .dealerCard{
+    max-width: 20%;
+    display: inline;
+    position: relative;
+    left: 1vw
+  }
+  .dealerOverlapCard{
+    max-width: 20%;
+    display: inline;
+    position: relative;
+    right: 5vw;
+  }
+
+
+  /* Large screens like sideway phone tilt, tablets, etc. */
+  @media (min-width: 750px) and (max-width: 1200px){
+    .playingCard {
+      max-width: 10%;
+    }
+  }
+
+  /* Desktop sizes */
+  @media (min-width: 1200px){
+    .p4overlappingCard{
+      position: relative;
+      right: 6%;
+    }
+  }
+
+  /* Average phone width */
+  @media (min-width: 320px) and (max-width: 480px) {
+    .overlappingCard{
+      position: relative;
+      right: 11%;
+    }
+    .overlappingCard2{
+      position: absolute;
+      min-width: 38.5%;
+      right: 47%;
+    }
+    .overlappingCard3{
+      position: absolute;
+      min-width: 38.5%;
+      right: 40%;
+    }
+    .overlappingCard4{
+      position: absolute;
+      min-width: 38.5%;
+      right: 33%;
+    }
+    .overlappingCard5{
+      position: absolute;
+      min-width: 38.5%;
+      right: 26%;
+    }
+    .overlappingCard6{
+      position: absolute;
+      min-width: 38.5%;
+      right: 19%;
+    }
+    .p4overlappingCard{
+      left: 77%;
+      position: relative;
+      bottom: 9.425vh;
+    }
+    .p4overlappingCard2{
+      max-width: none;
+      position: absolute;
+      width: 6.45vh;
+      left: 6vw;
+      bottom: 10vh;
+    }
+    .p4overlappingCard3{
+      max-width: none;
+      position: absolute;
+      width: 6.45vh;
+      left: 9vw;
+      bottom: 10vh;
+    }
+    .p4overlappingCard4{
+      max-width: none;
+      position: absolute;
+      width: 6.45vh;
+      left: 12vw;
+      bottom: 10vh;
+    }
+    .p4overlappingCard5{
+      max-width: none;
+      position: absolute;
+      width: 6.45vh;
+      left: 15vw;
+      bottom: 10vh;
+    }
+    .p4overlappingCard6{
+      max-width: none;
+      position: absolute;
+      width: 6.45vh;
+      left: 18vw;
+      bottom: 10vh;
+    }
+    .dealerCard{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 118%;
+    }
+    .dealerOverlapCard{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 130%;
+    }
+    .dealerOverlappingCard2{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 140%;
+    }
+    .dealerOverlappingCard3{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 150%;
+    }
+    .dealerOverlappingCard4{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 160%;
+    }
+    .dealerOverlappingCard5{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 170%;
+    }
+    .dealerOverlappingCard6{
+      position: absolute;
+      max-width: 65%;
+      bottom: 6.5%;
+      left: 180%;
+    }
+    .player{
+      display: inline;
+      max-width: 8%;
+      position: relative;
+      right: 12vw;
+      top: 2.25vh;
+    }
+    .leftPlayer{
+      left: 75%;
+      top: -7vh;
+    }
+    .playerHand{
+      display: inline;
+      position: relative;
+      top: 57vh;
+      left: 5vw;
+    }
+    .dealer{
+      position: relative;
+      top: 17vh;
+      left: 25vw;
+      max-width: 20%;
+    }
+    
+  } 
+
+
+  /* Large screens for web browsers */
+  @media (min-width: 1200px){
+    .playingCard{
+      max-width: 8%;
+    }
+    .overlappingCard{
+      position: relative;
+      right: 6%;
+    }
+  }
+
+
