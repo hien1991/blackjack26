@@ -22,6 +22,7 @@ Everything here can be cloned & pushed to heroku right out of the box.
 ### To be done & other side notes
 
 - Connected users aren't assigned to players yet, so as of now, anyone connected can "hit" or "stand" for the players. There was to be a select your player screen, with an option to spectate if all players were taken.
+- Bust sytem to be done when someone goes over 26
 - Dealer A.I. not designed yet, so it's currently just treated like another player.
 - No currency or betting system in place yet. This was the lowest priority as I wanted to work on the core game first.
 - In addition to currency & betting, a list of winners should be displayed after each round to announce which players won & which lost money.
