@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import "./Players.css"
 import PropTypes from "prop-types";
 //import io from 'socket.io-client';
@@ -70,8 +70,9 @@ const getCardDealt = (slot) => {
 
 const hideHitCardIfNotExist = (card) => {
     //set 'none' to 'visible' to debug-test styling of all cards present
+    //Currently displaying all because I can't get the state changes to pick up immediately for style changes to occur
     if (card === '0') {
-        return { "display": "visible" };
+        return { "display": "hidden" };
     }
     else {
         return { "display": "visible" }

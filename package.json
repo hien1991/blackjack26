@@ -1,7 +1,7 @@
 {
-    "name": "react-socket-io-chat",
+    "name": "blackjack26",
     "version": "1.0.0",
-    "description": "Example of building a Chat using React.js and Socket.io",
+    "description": "Example of building a game using React.js and Socket.io",
     "main": "./server/index.js",
     "scripts": {
         "dev": "node ./server/index.js",
@@ -11,15 +11,15 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/GrafSoul/react-socket-io-chat.git"
+        "url": ""
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/GrafSoul/react-socket-io-chat/issues"
+        "url": ""
     },
-    "homepage": "https://github.com/GrafSoul/react-socket-io-chat#readme",
+    "homepage": "",
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^8.2.0",

@@ -25,9 +25,12 @@ const PlayerSpace = () => {
 
     /* 0-1: player1 cards, 2-3: player2 cards, 4-5: player3 cards, 6-7: dealer cards, 8-12: player1 hit cards,
        13-17: player2 hit cards, 18-22: player3 hit cards, 23-27: dealer hit cards */
-    const [cardSlots, setCardSlots] = useState(() => ['back', 'back', 'back', 'back', 'back', 'back', 'back', 'back', 
+    const [cardSlots, setCardSlots] = useState(['back', 'back', 'back', 'back', 'back', 'back', 'back', 'back', 
     '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0']);
 
+    // useEffect(() => {
+    //     console.log("hello?");
+    // }, [cardSlots])
 
     useEffect(() => {
         socket.current = io.connect(ENDPOINT);
@@ -128,9 +131,8 @@ const PlayerSpace = () => {
             newCardSlots[i] = gameDeck.pop();
         }
         setCardSlots(newCardSlots);
-        //Need to set to "newCardSlots" instead of the state hook var cardSlots because it's still loading(?)
+        //Need to set to "newCardSlots" instead of the state hook var cardSlots because of the stateless non-immediate update nature
         socket.current.emit('dealtCards', {newCardSlots, gameDeck}, () => { });
-        //countPlayerCards(newCardSlots); //test after delete & delete if no effect.. the state/hook var might be useless...
         setNextTurn();
     }
 

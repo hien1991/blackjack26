@@ -1,11 +1,11 @@
-# SAY.OK | Simple Chat (ReactJS, Socket.io)
+# Blackjack26 | example multiplayer game (ReactJS, Socket.io)
 
-Example of building a simple chat using [React.js] and [Socket.io].  
-You can use chat to chat with friends without saving the correspondence.
+Example of building a multiplayer game using [React.js] and [Socket.io].  
+
 
 ### Demo
 
-Heroku Hosting - [SAY.OK]
+Heroku Hosting - [Blackjack26]
 
 ### Clone, Install, Development & Start
 
@@ -15,10 +15,10 @@ Below is a list of commands to deploy the project locally
 
 ```
 // Clone the repository.
-git clone https://github.com/GrafSoul/react-socket-io-chat.git
+git clone (this git url)
 
 // Go to the project folder.
-cd react-socket-io-chat/server
+cd blackjack26/server
 
 // Installing npm modules.
 npm install
@@ -31,7 +31,7 @@ npm start
 yarn start
 
 // Go to the client folder.
-cd react-socket-io-chat/client
+cd blackjack26/client
 
 // Installing npm modules.
 npm install
@@ -45,13 +45,3 @@ yarn start
 
 ```
 
-### License
-
-© 2020 | SAY.OK | Simple Chat (ReactJS, Socket.io) | [MIT licensed].
-
-[nodejs]: https://nodejs.org/
-[yarn]: https://yarnpkg.com/
-[react.js]: https://reactjs.org/
-[socket.io]: https://socket.io/
-[mit licensed]: https://github.com/GrafSoul/react-socket-io-chat.git/blob/master/LICENSE
-[say.ok]: https://sayok.herokuapp.com/

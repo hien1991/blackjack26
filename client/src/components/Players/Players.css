@@ -298,10 +298,17 @@
   @media (min-width: 1200px){
     .playingCard{
       max-width: 8%;
+      bottom: 5%;
     }
     .overlappingCard{
       position: relative;
       right: 6%;
+    }
+    .playerHand{
+      top: 50vh;
+    }
+    .player{
+      max-width: 5%;
     }
   }
 
